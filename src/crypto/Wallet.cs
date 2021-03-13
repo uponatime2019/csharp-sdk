@@ -43,7 +43,7 @@ namespace binance.dex.sdk.crypto
             {
                 address32[i] = (byte)pbase32.IndexOf(b32[i]);
             }
-            Address = bech32Encoder.EncodeData(address32);
+            Address = bech32Encoder.EncodeData(address32, 0, address32.Length, Bech32EncodingType.BECH32);
             byte[] pubKey = EcKey.PubKey.ToBytes();
             byte[] pubKeyPrefix = MessageType.GetTransactionType(EMessageType.PubKey);
             PubKeyForSign = new byte[pubKey.Length + pubKeyPrefix.Length + 1];
