@@ -57,7 +57,7 @@ namespace binance.dex.sdk.crypto
         public static Wallet FromPrivateKey(string privateKey, BinanceDexEnvironmentData env)
         {
             BigInteger privateKeyBigInteger = BigInteger.Parse("0" + privateKey, NumberStyles.HexNumber); // append "0" to get unsigned BigInteger
-            Key key = new Key(privateKeyBigInteger.ToByteArray(true, true));
+            Key key = new Key(privateKeyBigInteger.ToByteArray());
             Wallet wallet = new Wallet(key, env);
             wallet.PrivateKey = privateKey;
             return wallet;
@@ -122,9 +122,9 @@ namespace binance.dex.sdk.crypto
 
             if (ChainId == null)
             {
-                ChainId = chainIds.GetValueOrDefault(Env);
-                if (ChainId == null)
+                if (chainIds.TryGetValue(Env, out string id))
                 {
+                    ChainId = id;
                     InitChainId(client);
                 }
             }

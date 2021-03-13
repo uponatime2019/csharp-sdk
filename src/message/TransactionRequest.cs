@@ -371,7 +371,8 @@ namespace binance.dex.sdk.message
                     };
                     tokens.Add(token);
 
-                    long inputSum = inputsCoins.GetValueOrDefault(outputToken.Coin, 0L);
+                    inputsCoins.TryGetValue(outputToken.Coin, out long inputSum);
+
                     long newSum = inputSum + token.Amount;
                     if (newSum < 0L)
                     {
